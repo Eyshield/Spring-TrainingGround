@@ -1,0 +1,16 @@
+server:
+  port: 9000
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+
+
+jwt:
+  secret_key: ${SECRET_KEY}
+  expiration_time: ${EXPIRATION_TIME}
