@@ -1,9 +1,9 @@
 package com.trainingApi.Task;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.trainingApi.Column.Column;
+import com.trainingApi.Project.Project;
+import com.trainingApi.User.User;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,4 +21,11 @@ public class Task {
     private String title;
     private String description;
     private String priority;
+    @ManyToOne
+    private Project project;
+    @ManyToOne
+    private Column column;
+    @ManyToOne
+    private User user;
+
 }
