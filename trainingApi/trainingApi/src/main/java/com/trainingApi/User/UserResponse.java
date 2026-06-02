@@ -10,7 +10,6 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.UUID;
 
-@Entity
 @Getter
 @Setter
 @AllArgsConstructor

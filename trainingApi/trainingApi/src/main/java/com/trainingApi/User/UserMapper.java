@@ -3,11 +3,13 @@ package com.trainingApi.User;
 import com.trainingApi.Common.PageResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
+@Service
 public class UserMapper {
     public UserResponse toUserResponse(User user){
         return UserResponse.builder()

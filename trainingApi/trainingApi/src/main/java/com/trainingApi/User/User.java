@@ -33,7 +33,7 @@ public class User implements UserDetails {
     private String username;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @ManyToMany
+    @OneToMany(mappedBy = "user")
     private Collection<Project>projects=new ArrayList<>();
     @OneToMany(mappedBy = "user")
     private Collection<Task>tasks=new ArrayList<>();
