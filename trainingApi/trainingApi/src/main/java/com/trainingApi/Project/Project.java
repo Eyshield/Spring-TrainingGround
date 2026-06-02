@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -25,8 +27,8 @@ public class Project {
     private String description;
     private LocalDate created_At;
     private LocalDate updated_At;
-    @ManyToMany
-    private Collection<User>users=new ArrayList<>();
+    @ManyToOne
+    private User user;
     @OneToMany(mappedBy = "project")
     private Collection<Column>columns=new ArrayList<>();
     @OneToMany(mappedBy = "project")
