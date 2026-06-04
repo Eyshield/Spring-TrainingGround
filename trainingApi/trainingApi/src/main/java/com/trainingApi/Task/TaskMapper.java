@@ -13,4 +13,11 @@ public class TaskMapper {
                 .username(task.getUser().getUsername())
                 .build();
     }
+    public  Task toTask(TaskRequest taskRequest){
+        return Task.builder()
+                .title(taskRequest.getTitle())
+                .description(taskRequest.getDescription())
+                .priority(taskRequest.getPriority())
+                .build();
+    }
 }
