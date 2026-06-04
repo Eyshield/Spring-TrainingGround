@@ -17,7 +17,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
 
-    public AuthResponse signUp(User request){
+    public AuthResponse signUp(AuthenticationRequest request){
         User user= new User();
         user.setEmail(request.getEmail());
         user.setRole(request.getRole());
@@ -26,9 +26,9 @@ public class AuthenticationService {
         userRepo.save(user);
         return new AuthResponse(token);
     }
-    public AuthResponse Login(User request){
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(),request.getPassword()));
-        User user = userRepo.findByEmail(request.getUsername()).orElseThrow();
+    public AuthResponse Login(AuthenticationRequest request){
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(),request.getPassword()));
+        User user = userRepo.findByEmail(request.getEmail()).orElseThrow();
         String token= jwtService.generateToken(user);
         return new AuthResponse(token);
     }
