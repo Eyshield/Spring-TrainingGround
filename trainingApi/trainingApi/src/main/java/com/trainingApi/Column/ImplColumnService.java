@@ -1,5 +1,6 @@
 package com.trainingApi.Column;
 
+import com.trainingApi.ExceptionHandler.ResourceNotFoundException;
 import com.trainingApi.Project.Project;
 import com.trainingApi.Project.ProjectRepo;
 import lombok.AllArgsConstructor;
@@ -18,15 +19,16 @@ public class ImplColumnService implements ColumnService{
     @Override
     public ColumnResponse addColumn(ColumnRequest columnRequest) {
         Column column = columnMapper.toColumn(columnRequest);
-        Project project= projectRepo.findById(columnRequest.getProjectId()).orElseThrow();
+        Project project= projectRepo.findById(columnRequest.getProjectId())
+                .orElseThrow(()-> new ResourceNotFoundException("Project not found"));
         column.setProject(project);
         return columnMapper.toColumnResponse(columnRepo.save(column));
     }
 
     @Override
     public ColumnResponse updateColumn(UUID id, ColumnRequest columnRequest) {
-        Column column= columnRepo.findById(id).orElseThrow();
-        Project project= projectRepo.findById(columnRequest.getProjectId()).orElseThrow();
+        Column column= columnRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Column not found"));
+        Project project= projectRepo.findById(columnRequest.getProjectId()).orElseThrow(()-> new ResourceNotFoundException("Project not found"));
         column.setProject(project);
         column.setPosition(columnRequest.getPosition());
         column.setTitle(columnRequest.getTitle());

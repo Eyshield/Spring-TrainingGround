@@ -1,4 +1,5 @@
 package com.trainingApi.Column;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,7 @@ import java.util.UUID;
 public class ColumnController {
     private final ColumnService columnService;
     @PostMapping("/add")
-    public ResponseEntity<ColumnResponse> addColumn(@RequestBody ColumnRequest columnRequest){
+    public ResponseEntity<ColumnResponse> addColumn(@RequestBody @Valid ColumnRequest columnRequest){
         return ResponseEntity.status(HttpStatus.CREATED).body(columnService.addColumn(columnRequest));
     }
     @GetMapping("/{id}")
@@ -22,7 +23,7 @@ public class ColumnController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity <ColumnResponse>updateColumn(@PathVariable UUID id, @RequestBody ColumnRequest columnRequest){
+    public ResponseEntity <ColumnResponse>updateColumn(@PathVariable UUID id, @RequestBody @Valid ColumnRequest columnRequest){
         return ResponseEntity.status(HttpStatus.OK).body(columnService.updateColumn(id,columnRequest));
     }
 
