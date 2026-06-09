@@ -1,6 +1,7 @@
 package com.trainingApi.Project;
 
 import com.trainingApi.Common.PageResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,7 +17,7 @@ import java.util.UUID;
 public class ProjectController {
     private ProjectService projectService;
     @PostMapping("/add")
-    public ResponseEntity<ProjectResponse> addProject(@RequestBody ProjectRequest projectRequest){
+    public ResponseEntity<ProjectResponse> addProject(@RequestBody @Valid ProjectRequest projectRequest){
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.addProject(projectRequest));
     }
     @GetMapping("/{id}")
@@ -25,7 +26,7 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity <ProjectResponse>updateProject(@PathVariable UUID id, @RequestBody ProjectRequest projectRequest){
+    public ResponseEntity <ProjectResponse>updateProject(@PathVariable  UUID id, @RequestBody @Valid ProjectRequest projectRequest){
         return ResponseEntity.status(HttpStatus.OK).body(projectService.updateProject(id,projectRequest));
     }
 

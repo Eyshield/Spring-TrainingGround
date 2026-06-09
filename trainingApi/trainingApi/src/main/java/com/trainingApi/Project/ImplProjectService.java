@@ -1,6 +1,7 @@
 package com.trainingApi.Project;
 
 import com.trainingApi.Common.PageResponse;
+import com.trainingApi.ExceptionHandler.ResourceNotFoundException;
 import com.trainingApi.User.User;
 import com.trainingApi.User.UserRepo;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class ImplProjectService implements ProjectService {
     private final UserRepo userRepo;
     @Override
     public ProjectResponse addProject(ProjectRequest projectRequest) {
-        User user = userRepo.findById(projectRequest.getUserId()).orElseThrow();
+        User user = userRepo.findById(projectRequest.getUserId()).orElseThrow(()-> new ResourceNotFoundException("User not found"));
         Project project=projectMapper.toProject(projectRequest);
         project.setUser(user);
         return projectMapper.toProjectResponse(projectRepo.save(project));
@@ -53,6 +54,6 @@ public class ImplProjectService implements ProjectService {
         return projectMapper.toPageResponse(projectRepo.findByNameContainingIgnoreCase(pageable, name));
     }
     private Project findProjectById(UUID id){
-        return projectRepo.findById(id).orElseThrow(()->new RuntimeException("no project found"));
+        return projectRepo.findById(id).orElseThrow(()-> new ResourceNotFoundException("Project not found"));
     }
 }
