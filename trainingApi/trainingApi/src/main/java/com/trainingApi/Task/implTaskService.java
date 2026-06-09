@@ -2,6 +2,7 @@ package com.trainingApi.Task;
 
 import com.trainingApi.Column.Column;
 import com.trainingApi.Column.ColumnRepo;
+import com.trainingApi.ExceptionHandler.ResourceNotFoundException;
 import com.trainingApi.Project.Project;
 import com.trainingApi.Project.ProjectRepo;
 import com.trainingApi.User.User;
@@ -58,12 +59,12 @@ public class implTaskService implements TaskService {
     }
 
     private User findUserById(UUID userId){
-        return userRepo.findById(userId).orElseThrow();
+        return userRepo.findById(userId).orElseThrow(()-> new ResourceNotFoundException("user not found"));
     }
     private Project findProjectById(UUID projectId){
-        return projectRepo.findById(projectId).orElseThrow();
+        return projectRepo.findById(projectId).orElseThrow(()-> new ResourceNotFoundException("Project not found"));
     }
     private Column findColumnById(UUID columnId){
-        return columnRepo.findById(columnId).orElseThrow();
+        return columnRepo.findById(columnId).orElseThrow(()-> new ResourceNotFoundException("Column not found"));
     }
 }
