@@ -1,6 +1,7 @@
 package com.trainingApi.User;
 
 import com.trainingApi.Common.PageResponse;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -16,7 +17,7 @@ import java.util.UUID;
 public class UserController {
     private UserService userService;
     @PostMapping("/add")
-    public ResponseEntity<UserResponse> addUser(@RequestBody UserRequest userRequest){
+    public ResponseEntity<UserResponse> addUser(@RequestBody @Valid UserRequest userRequest){
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.addUser(userRequest));
     }
     @GetMapping("/{id}")

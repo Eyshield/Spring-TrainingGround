@@ -1,6 +1,8 @@
 package com.trainingApi.User;
 
 import com.trainingApi.Common.PageResponse;
+import com.trainingApi.ExceptionHandler.BadRequestException;
+import com.trainingApi.ExceptionHandler.ResourceNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,6 +18,9 @@ public class ImplUserService implements UserService {
     private PasswordEncoder passwordEncoder;
     @Override
     public UserResponse addUser(UserRequest userRequest) {
+        if (userRepo.existsByEmail(userRequest.getEmail())) {
+            throw new BadRequestException("Email déjà utilisé : " + userRequest.getEmail());
+        }
         User user = userMapper.toUser(userRequest);
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         return userMapper.toUserResponse(userRepo.save(user));
@@ -43,7 +48,7 @@ public class ImplUserService implements UserService {
     }
     private User findUserById(UUID id) {
         return userRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("No User Found"));
+                .orElseThrow( ()-> new ResourceNotFoundException("Project not found"));
     }
 
     @Override
